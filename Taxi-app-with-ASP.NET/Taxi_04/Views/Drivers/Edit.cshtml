@@ -1,0 +1,89 @@
+﻿@model Taxi_04.Models.Driver
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Driver</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+
+            <div class="col-md-12" >
+                <dt >
+                    @Html.DisplayNameFor(model => model.OwnedVehicles) - 
+                    @Html.ActionLink("Add new", "Create", "Vehicles", new { driverId=Model.ID }, null)
+                </dt>
+
+                <dd style="margin-left: 20px">
+                    @foreach (var vehicle in Model.OwnedVehicles)
+                    {
+                        <div>
+                            @vehicle.Fullname -
+                            @Html.ActionLink("Edit", "Edit", "Vehicles", new { id = vehicle.ID }, null)
+                            @Html.ActionLink("Delete", "Delete", "Vehicles", new { id = vehicle.ID }, null)
+                        </div>
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Rides)
+                    @Html.ActionLink("Add new", "Create", "Rides", new { driverId = Model.ID }, null)
+                </dt>
+
+                <dd style="margin-left: 20px">
+                    @foreach (var ride in Model.Rides)
+                {
+                        <div>
+                            @ride.StartLocation.Name - @ride.EndLocation.Name (@ride.Time.ToShortDateString()) -
+                            @Html.ActionLink("Edit", "Edit", "Rides", new { id = ride.ID }, null)
+                            @Html.ActionLink("Delete", "Delete", "Rides", new { id = ride.ID }, null)
+                        </div>
+                    }
+                </dd>
+                <br />
+            </div>
+
+
+            
+        </div>
+}
+
+<div  class="col-md-12">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

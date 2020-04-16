@@ -1,0 +1,69 @@
+﻿@model Taxi_04.Models.Passenger
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Passenger</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        @if (ViewBag.prevRides.Count > 0)
+        {
+            <dt>
+                Previous rides
+            </dt>
+
+            <dd>
+                @foreach (var ride in ViewBag.prevRides)
+                {
+                    <div>
+                        @ride.StartLocation.Name - @ride.EndLocation.Name (@ride.Time.ToShortDateString())
+                    </div>
+                }
+            </dd>
+        }
+
+
+        @if (ViewBag.nextRides.Count > 0)
+        {
+            <dt>
+                Booked rides
+            </dt>
+
+            <dd>
+                @foreach (var ride in ViewBag.nextRides)
+                {
+                    <div>
+                        @ride.StartLocation.Name - @ride.EndLocation.Name (@ride.Time.ToShortDateString())
+                    </div>
+                }
+            </dd>
+        }
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
